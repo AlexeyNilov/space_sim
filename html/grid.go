@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"math"
-	"strconv"
 
 	"github.com/AlexeyNilov/space_sim/space"
 )
@@ -18,7 +17,7 @@ type BoardData struct {
 }
 
 func getPointData(space *space.Space, pointIndex int) string {
-	content := strconv.Itoa((*space)[pointIndex].ID)
+	content := (*space)[pointIndex].Content
 	return fmt.Sprintf(divClass, pointIndex, content)
 }
 

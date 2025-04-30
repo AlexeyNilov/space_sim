@@ -3,6 +3,7 @@ package space
 type Point struct {
 	Next *Point
 	ID int
+	Content string
 }
 
 type Space []Point

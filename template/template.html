@@ -2,6 +2,23 @@
 <html>
 <head>
   <link rel="stylesheet" href="static/styles.css">
+  <script>
+    window.onload = function() {
+      const ws = new WebSocket("ws://" + window.location.host + "/ws");
+      
+      ws.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        updateGrid(data);
+      };
+
+      function updateGrid(data) {
+        const board = document.querySelector('.board');
+        board.innerHTML = data.grid;
+        board.style.gridTemplateColumns = `repeat(${data.side}, 50px)`;
+        board.style.gridTemplateRows = `repeat(${data.side}, 50px)`;
+      }
+    };
+  </script>
 </head>
 <body>
   <h1>Space</h1>
