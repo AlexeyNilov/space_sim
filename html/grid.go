@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"math"
-	"os"
 	"strconv"
 
 	"github.com/AlexeyNilov/space_sim/space"
@@ -75,36 +74,4 @@ func GenerateGrid(space *space.Space) (int, string) {
 
 	// Return the grid as HTML
 	return side, buffer.String()
-}
-
-func GenerateHTML(side int, grid string) {
-	// Read the template file
-	tmpl, err := template.ParseFiles("tpl/template.html")
-	if err != nil {
-		fmt.Println("Error reading template file:", err)
-		return
-	}
-
-	// Create the HTML file
-	file, err := os.Create("output/board.html")
-	if err != nil {
-		fmt.Println("Error creating file:", err)
-		return
-	}
-	defer file.Close()
-
-	// Generate the HTML content
-	data := BoardData{
-		Side: side,
-		Grid: template.HTML(grid), // Convert grid to template.HTML
-	}
-
-	// Execute the template
-	err = tmpl.Execute(file, data)
-	if err != nil {
-		fmt.Println("Error executing template:", err)
-		return
-	}
-
-	fmt.Println("HTML file 'board.html' generated successfully!")
 }
