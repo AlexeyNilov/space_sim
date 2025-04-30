@@ -94,23 +94,21 @@ func (c *Client) writePump() {
 		c.conn.Close()
 	}()
 
-	for {
-		select {
-		case message, ok := <-c.send:
-			if !ok {
-				c.conn.WriteMessage(websocket.CloseMessage, []byte{})
-				return
-			}
-
-			w, err := c.conn.NextWriter(websocket.TextMessage)
-			if err != nil {
-				return
-			}
-			w.Write(message)
-
-			if err := w.Close(); err != nil {
-				return
-			}
+	for message := range c.send {
+		// If the channel is closed, the loop will automatically exit
+		w, err := c.conn.NextWriter(websocket.TextMessage)
+		if err != nil {
+			return
+		}
+		
+		_, _ = w.Write(message)
+	
+		if err := w.Close(); err != nil {
+			return
 		}
 	}
+	
+	// If the loop exits, it means the channel was closed, so handle the connection closure
+	_ = c.conn.WriteMessage(websocket.CloseMessage, []byte{})
+	
 }
