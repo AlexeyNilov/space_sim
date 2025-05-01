@@ -3,8 +3,8 @@ package space
 import "github.com/AlexeyNilov/space_sim/particle"
 
 type Point struct {
-	Next    *Point
-	ID      int
+	Next     *Point
+	ID       int
 	PointsTo *particle.Particle
 }
 
