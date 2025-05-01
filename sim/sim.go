@@ -14,7 +14,7 @@ func Run(space *space.Space) {
 	time.Sleep(1 * time.Second)
 	CreateParticles(space, 0.5)
 	for {
-		time.Sleep(2 * time.Second)
+		time.Sleep(500 * time.Millisecond)
 		MoveParticles(space)
 	}
 }
@@ -31,7 +31,6 @@ func CreateParticles(space *space.Space, probability float64) {
 }
 
 func MoveParticles(space *space.Space) {
-	// Iterate over each point in the space
 	for i := range *space {
 		if (*space)[i].PointsTo != nil {
 			go (*space)[i].MoveParticle()
