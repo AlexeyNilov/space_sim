@@ -30,3 +30,11 @@ func (s *Space) GetPoint(id int) *Point {
 func (s *Space) GetSize() int {
 	return len(*s)
 }
+
+func (s *Space) GC() {
+	for i := range *s {
+		if (*s)[i].PointsTo != nil && (*s)[i].PointsTo.Energy == 0 {
+			(*s)[i].RemoveParticle()
+		}
+	}
+}

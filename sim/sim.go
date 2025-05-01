@@ -16,6 +16,7 @@ func Run(space *space.Space) {
 	for {
 		time.Sleep(500 * time.Millisecond)
 		MoveParticles(space)
+		space.GC()
 	}
 }
 

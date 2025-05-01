@@ -1,6 +1,9 @@
 package particle
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type Particle struct {
 	Name   string
@@ -8,14 +11,14 @@ type Particle struct {
 }
 
 func NewParticle(name string) *Particle {
-	return &Particle{Name: name, Energy: 5}
+	return &Particle{Name: name, Energy: rand.Intn(10) + 1}
 }
 
-func (p *Particle) GetIntent() string {
-	if p.Energy > 1 {
+func (p *Particle) GetIntent(content string) string {
+	if p.Energy > 1 && content == ""{
 		return "Move"
 	}
-	return "Wait"
+	return "Eat"
 }
 
 func (p *Particle) GetDescription() string {
@@ -23,4 +26,11 @@ func (p *Particle) GetDescription() string {
 		return fmt.Sprintf("%s:%d", p.Name, p.Energy)
 	}
 	return ""
+}
+
+func ExchangeEnergy(p1 *Particle, p2 *Particle) {
+	if p1.Energy > p2.Energy {
+		p1.Energy += 1
+		p2.Energy -= 1
+	}
 }

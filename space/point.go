@@ -36,12 +36,21 @@ func LinkPoints(p1, p2 *Point) {
 }
 
 func (p *Point) MoveParticle() {
-	if p.PointsTo != nil && p.Next.PointsTo == nil {
-		time.Sleep(10 * time.Millisecond)
-		if p.PointsTo.GetIntent() == "Move" {
+	if p.PointsTo == nil {
+		return
+	}
+
+	time.Sleep(10 * time.Millisecond)
+
+	if p.Next.PointsTo == nil {
+		if p.PointsTo.GetIntent("") == "Move" {
 			p.PointsTo.Energy -= 1
 			p.Next.PointsTo = p.PointsTo
 			p.RemoveParticle()
+		}
+	} else {
+		if p.PointsTo.GetIntent(p.Next.GetContent()) == "Eat" {
+			particle.ExchangeEnergy(p.PointsTo, p.Next.PointsTo)
 		}
 	}
 }

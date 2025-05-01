@@ -3,6 +3,7 @@ package space
 import (
 	"testing"
 
+	"github.com/AlexeyNilov/space_sim/particle"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -44,4 +45,15 @@ func TestGetSize(t *testing.T) {
 	space := CreateSpace(spaceSize)
 	got := space.GetSize()
 	assert.Equal(t, spaceSize, got)
+}
+
+func TestGC(t *testing.T) {
+	space := CreateSpace(spaceSize)
+	if (*space)[0].PointsTo == nil {
+		(*space)[0].PointsTo = particle.NewParticle("Empty")
+	}
+	(*space)[0].PointsTo.Energy = 0
+	space.GC()
+	// test if the first point is still there
+	assert.Nil(t, (*space)[0].PointsTo)
 }
