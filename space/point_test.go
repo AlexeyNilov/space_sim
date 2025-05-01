@@ -41,10 +41,10 @@ func TestGetContent(t *testing.T) {
 	assert.Equal(t, "", got)
 }
 
-func TestRemoveParticle(t *testing.T) {
+func TestUnlinkParticle(t *testing.T) {
 	point := NewPoint()
 	point.CreateParticle("Test")
-	point.RemoveParticle()
+	point.UnlinkParticle()
 
 	assert.Nil(t, point.PointsTo)
 }

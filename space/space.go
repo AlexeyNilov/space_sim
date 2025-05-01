@@ -2,7 +2,6 @@ package space
 
 type Space []Point
 
-
 func (s *Space) AddPoint(p *Point) {
 	*s = append(*s, *p)
 }
@@ -34,7 +33,7 @@ func (s *Space) GetSize() int {
 func (s *Space) GC() {
 	for i := range *s {
 		if (*s)[i].PointsTo != nil && (*s)[i].PointsTo.Energy == 0 {
-			(*s)[i].RemoveParticle()
+			(*s)[i].UnlinkParticle()
 		}
 	}
 }

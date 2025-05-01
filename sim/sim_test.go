@@ -50,3 +50,27 @@ func BenchmarkRun(b *testing.B) {
 		s.GC()
 	}
 }
+
+func TestMoveParticles(t *testing.T) {
+	s := space.CreateSpace(spaceSize)
+	(*s)[0].CreateParticle("P0")
+	(*s)[0].PointsTo.Energy = 10
+	(*s)[1].CreateParticle("P1")
+	(*s)[1].PointsTo.Energy = 1
+
+	MoveParticles(s)
+	time.Sleep(50 * time.Millisecond)
+
+	assert.NotNil(t, (*s)[0].PointsTo)
+	assert.NotNil(t, (*s)[1].PointsTo)
+	assert.Equal(t, "P0", (*s)[0].PointsTo.Name)
+	assert.Equal(t, 11, (*s)[0].PointsTo.Energy)
+
+	s.GC()
+	MoveParticles(s)
+	time.Sleep(50 * time.Millisecond)
+
+	assert.Nil(t, (*s)[0].PointsTo)
+	assert.NotNil(t, (*s)[1].PointsTo)
+	assert.Equal(t, "P0", (*s)[1].PointsTo.Name)
+}

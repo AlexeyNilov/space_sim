@@ -20,7 +20,7 @@ func (p *Point) CreateParticle(name string) {
 	p.PointsTo = particle.NewParticle(name)
 }
 
-func (p *Point) RemoveParticle() {
+func (p *Point) UnlinkParticle() {
 	p.PointsTo = nil
 }
 
@@ -42,15 +42,15 @@ func (p *Point) MoveParticle() {
 
 	time.Sleep(10 * time.Millisecond)
 
-	if p.Next.PointsTo == nil {
-		if p.PointsTo.GetIntent("") == "Move" {
-			p.PointsTo.Energy -= 1
-			p.Next.PointsTo = p.PointsTo
-			p.RemoveParticle()
-		}
-	} else {
-		if p.PointsTo.GetIntent(p.Next.GetContent()) == "Eat" {
-			particle.ExchangeEnergy(p.PointsTo, p.Next.PointsTo)
-		}
+	if p.Next.PointsTo == nil && p.PointsTo.GetIntent("") == "Move" {
+		p.PointsTo.Energy--
+		p.Next.PointsTo = p.PointsTo
+		p.UnlinkParticle()
+		return
+	}
+
+	if p.Next.PointsTo != nil && p.PointsTo.GetIntent(p.Next.GetContent()) == "Eat" {
+		particle.ExchangeEnergy(p.PointsTo, p.Next.PointsTo)
 	}
 }
+
