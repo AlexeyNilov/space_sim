@@ -17,7 +17,7 @@ type BoardData struct {
 }
 
 func getPointData(space *space.Space, pointIndex int) string {
-	content := (*space)[pointIndex].Content
+	content := (*space)[pointIndex].GetContent()
 	return fmt.Sprintf(divClass, pointIndex, content)
 }
 
