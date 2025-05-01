@@ -39,3 +39,9 @@ func TestGetPoint(t *testing.T) {
 	point := space.GetPoint(0)
 	assert.Equal(t, 0, point.ID)
 }
+
+func TestGetSize(t *testing.T) {
+	space := CreateSpace(spaceSize)
+	got := space.GetSize()
+	assert.Equal(t, spaceSize, got)
+}

@@ -22,7 +22,7 @@ func getPointData(space *space.Space, pointIndex int) string {
 }
 
 func GenerateGrid(space *space.Space) (int, string) {
-	spaceSize := len((*space))
+	spaceSize := space.GetSize()
 	side := int(math.Ceil(math.Sqrt(float64(spaceSize))))
 	if side%2 == 0 {
 		side++ // Ensure the side length is odd for symmetry

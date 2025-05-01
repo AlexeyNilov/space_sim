@@ -26,3 +26,7 @@ func (s *Space) GetPoint(id int) *Point {
 	}
 	return nil
 }
+
+func (s *Space) GetSize() int {
+	return len(*s)
+}
