@@ -2,6 +2,7 @@ package sim
 
 import (
 	"testing"
+	"time"
 
 	"github.com/AlexeyNilov/space_sim/space"
 	"github.com/stretchr/testify/assert"
@@ -22,12 +23,12 @@ func TestCreateParticles(t *testing.T) {
 	}
 
 	tests := []struct {
-		name       string
+		name        string
 		probability float64
 		expected    int
 	}{
 		{"AllParticles", 1, spaceSize}, // Probability = 1, expect all points to have particles
-		{"NoParticles", 0, 0},         // Probability = 0, expect no points to have particles
+		{"NoParticles", 0, 0},          // Probability = 0, expect no points to have particles
 	}
 
 	for _, tt := range tests {
@@ -39,3 +40,13 @@ func TestCreateParticles(t *testing.T) {
 	}
 }
 
+func BenchmarkRun(b *testing.B) {
+	s := space.CreateSpace(spaceSize)
+	CreateParticles(s, 0.5)
+	b.ResetTimer()
+	for range 10 {
+		time.Sleep(500 * time.Millisecond)
+		MoveParticles(s)
+		s.GC()
+	}
+}
