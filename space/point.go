@@ -39,6 +39,7 @@ func (p *Point) MoveParticle() {
 	if p.PointsTo != nil && p.Next.PointsTo == nil {
 		time.Sleep(10 * time.Millisecond)
 		if p.PointsTo.GetIntent() == "Move" {
+			p.PointsTo.Energy -= 1
 			p.Next.PointsTo = p.PointsTo
 			p.RemoveParticle()
 		}

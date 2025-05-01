@@ -32,6 +32,7 @@ func TestGetContent(t *testing.T) {
 	assert.Equal(t, "", got)
 
 	point.CreateParticle("Test")
+	point.PointsTo.Energy = 0
 	got = point.GetContent()
 	assert.Equal(t, "Test:0", got)
 

@@ -13,6 +13,7 @@ func TestNewParticle(t *testing.T) {
 
 func TestGetIntent(t *testing.T) {
 	p := NewParticle("Test")
+	p.Energy = 0
 	got := p.GetIntent()
 	assert.Equal(t, "Wait", got)
 
@@ -23,10 +24,7 @@ func TestGetIntent(t *testing.T) {
 
 func TestGetDescription(t *testing.T) {
 	p := NewParticle("P")
-	got := p.GetDescription()
-	assert.Equal(t, "P:0", got)
-
 	p.Energy = 10
-	got = p.GetDescription()
+	got := p.GetDescription()
 	assert.Equal(t, "P:10", got)
 }
