@@ -29,7 +29,7 @@ func (p *Particle) GetDescription() string {
 }
 
 func ExchangeEnergy(p1 *Particle, p2 *Particle) {
-	if p1.Energy > p2.Energy {
+	if p1.Energy >= p2.Energy {
 		p1.Energy += 1
 		p2.Energy -= 1
 	}
