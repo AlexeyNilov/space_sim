@@ -28,7 +28,7 @@ func (p *Point) GetContent() string {
 	if p.PointsTo == nil {
 		return ""
 	}
-	return p.PointsTo.Name
+	return p.PointsTo.GetDescription()
 }
 
 func LinkPoints(p1, p2 *Point) {
@@ -38,7 +38,9 @@ func LinkPoints(p1, p2 *Point) {
 func (p *Point) MoveParticle() {
 	if p.PointsTo != nil && p.Next.PointsTo == nil {
 		time.Sleep(10 * time.Millisecond)
-		p.Next.PointsTo = p.PointsTo
-		p.RemoveParticle()
+		if p.PointsTo.GetIntent() == "Move" {
+			p.Next.PointsTo = p.PointsTo
+			p.RemoveParticle()
+		}
 	}
 }
