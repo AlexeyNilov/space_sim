@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/AlexeyNilov/space_sim/html"
+	"github.com/AlexeyNilov/space_sim/sim"
 	"github.com/AlexeyNilov/space_sim/space"
 )
 
@@ -45,16 +46,9 @@ func main() {
 		ticker := time.NewTicker(1 * time.Second)
 		defer ticker.Stop()
 
-		pointID := 0
-
 		for range ticker.C {
 			// Update the space (you can add your space update logic here)
-			(*space)[pointID].Content = "P"
-			if pointID == spaceSize-1 {
-				pointID = 0
-			} else {
-				pointID++
-			}
+
 			side, grid := html.GenerateGrid(space)
 
 			// Create the update message
@@ -84,4 +78,6 @@ func main() {
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
+
+	go sim.Run(space)
 }
