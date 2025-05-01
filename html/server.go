@@ -32,7 +32,7 @@ func StartServer(addr *string, side int, grid string, space *space.Space) {
 
 	// Start a goroutine to update the grid periodically
 	go func() {
-		ticker := time.NewTicker(1 * time.Second)
+		ticker := time.NewTicker(200 * time.Millisecond)
 		defer ticker.Stop()
 
 		for range ticker.C {

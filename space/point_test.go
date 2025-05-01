@@ -48,3 +48,21 @@ func TestRemoveParticle(t *testing.T) {
 	assert.Nil(t, point.PointsTo)
 }
 
+func TestMoveParticle(t *testing.T) {
+	startPoint := NewPoint()
+	startPoint.CreateParticle("First")
+	endPoint := NewPoint()
+	startPoint.Next = endPoint
+	startPoint.MoveParticle()
+
+	assert.Nil(t, startPoint.PointsTo)
+	assert.Equal(t, "First", endPoint.PointsTo.Name)
+
+	startPoint.MoveParticle()
+	assert.Equal(t, "First", endPoint.PointsTo.Name)
+
+	startPoint.CreateParticle("Second")
+	startPoint.MoveParticle()
+	assert.Equal(t, "Second", startPoint.PointsTo.Name)
+	assert.Equal(t, "First", endPoint.PointsTo.Name)
+}

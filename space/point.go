@@ -1,6 +1,10 @@
 package space
 
-import "github.com/AlexeyNilov/space_sim/particle"
+import (
+	"time"
+
+	"github.com/AlexeyNilov/space_sim/particle"
+)
 
 type Point struct {
 	Next     *Point
@@ -29,4 +33,12 @@ func (p *Point) GetContent() string {
 
 func LinkPoints(p1, p2 *Point) {
 	p1.Next = p2
+}
+
+func (p *Point) MoveParticle() {
+	if p.PointsTo != nil && p.Next.PointsTo == nil {
+		time.Sleep(10 * time.Millisecond)
+		p.Next.PointsTo = p.PointsTo
+		p.RemoveParticle()
+	}
 }
